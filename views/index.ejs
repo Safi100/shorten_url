@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="container py-3"> 
+        <h1>URL Shrinker</h1>
+        <form action="/ShortUrl" method="POST" class="my-4 row">
+            <input class="col-5 mx-2" type="text" name="fullUrl" required placeholder="Url">
+            <button class="btn btn-success col-3 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1" type="submit">Shrink</button>
+        </form>
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>Full URL</th>
+                    <th>Short URL</th>
+                    <th>Created Date</th>
+                    <th>Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% URLs.forEach(url => { %>
+                    <tr>
+                        <th><a href="<%= url.full %>"><%= url.full %></a></th>
+                        <th><a href="<%= url.short %>"><%= url.short %></a></th>
+                        <th><%= url.createdAt.toLocaleDateString() %></th>
+                        <th><%= url.visited %></th>
+                        <th><form action="/ShortUrl/<%= url._id %>?_method=DELETE" method="POST"><button type="submit" class="btn btn-danger">Delete</button></form></th>
+                    </tr>
+                <% }) %>  
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
